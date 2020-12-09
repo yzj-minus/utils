@@ -12,7 +12,7 @@ import com.yzjdev.utils.LogUtil;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView pathView, contentView;
+    private TextView contentView;
     private EditText contentEdit, pathNameEdit;
     String pathName, content;
     @Override
@@ -21,11 +21,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         LogUtil.Debug();
 
-        pathView = findViewById(R.id.path);
         contentView = findViewById(R.id.display);
         contentEdit = findViewById(R.id.content);
         pathNameEdit = findViewById(R.id.pathName);
-
     }
 
     public void write(View view) {
@@ -37,5 +35,21 @@ public class MainActivity extends AppCompatActivity {
     public void read(View view) {
         content = FileUtil.read(this, pathNameEdit.getText().toString(),"");
         contentView.setText(content);
+    }
+
+    public void copy(View view) {
+        EditText sourceEdit = findViewById(R.id.source);
+        EditText destEdit = findViewById(R.id.dest);
+        FileUtil.copy(this, sourceEdit.getText().toString(), destEdit.getText().toString());
+    }
+
+    public void delete(View view) {
+        pathName = pathNameEdit.getText().toString();
+//        boolean z = FileUtil.delete(pathName, true);
+//        LogUtil.d(z);
+        String a = FileUtil.getPath(pathName);
+        LogUtil.d(a);
+        a=FileUtil.getPath(this, pathName);
+        LogUtil.d("context: "+a);
     }
 }
